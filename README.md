@@ -62,7 +62,7 @@ pnpm i @dcloudio/uni-ui
   ]
 }
 
-7`**安装类型声明文件**
+**7`安装类型声明文件**
 pnpm i -D @uni-helper/uni-ui-types
 配置类型声明文件
 {
@@ -80,3 +80,68 @@ pnpm i -D @uni-helper/uni-ui-types
     "nativeTags": ["block", "component", "template", "slot"]
   }
 }
+
+**8`持久化存储插件pinia**
+pnpm install pinia
+pnpm i pinia-plugin-persistedstate
+
+## 1:创建 pinia 实例
+src\stores\index.ts
+// 
+const pinia = createPinia()
+
+// 使用持久化存储插件
+pinia.use(persist)
+
+// 默认导出，给 main.ts 使用
+export default pinia
+
+// 模块统一导出
+export * from './modules/member'
+
+## 2:app使用
+src\main.ts
+app.use(pinia)
+## 3: 定义 Store
+src\stores\modules\users.ts
+export const userStore = defineStore(
+  'users',
+  () => {
+    // 用户信息
+    const userProfile = ref<any>()
+
+    // 保存用户信息，登录时使用
+    const setUserProfile = (val: any) => {
+        userProfile.value = val
+    }
+
+    // 清理用户信息，退出时使用
+    const clearUserProfile = () => {
+        userProfile.value = undefined
+    }
+
+    // 记得 return
+    return {
+        userProfile,
+      setUserProfile,
+      clearUserProfile,
+    }
+  },
+  // TODO: 持久化插件 persist
+  {
+    // 网页端配置
+    // persist: true,
+
+    // 多平台兼容API
+    persist: {
+      storage: {
+        getItem(key) {
+          return uni.getStorageSync(key)
+        },
+        setItem(key, value) {
+          uni.setStorageSync(key, value)
+        },
+      },
+    },
+  },
+)
