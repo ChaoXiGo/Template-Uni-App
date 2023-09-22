@@ -160,3 +160,77 @@ export const userStore = defineStore(
   },
 )
 ```
+
+## 9`统一代码风格 Eslint
+- 安装 `eslint` + `prettier`
+
+```sh
+pnpm i -D eslint prettier eslint-plugin-vue @vue/eslint-config-prettier @vue/eslint-config-typescript @rushstack/eslint-patch @vue/tsconfig
+```
+
+- 新建 `.eslintrc.cjs` 文件，添加以下 `eslint` 配置
+
+```js
+/* eslint-env node */
+require('@rushstack/eslint-patch/modern-module-resolution')
+
+module.exports = {
+  root: true,
+  extends: [
+    'plugin:vue/vue3-essential',
+    'eslint:recommended',
+    '@vue/eslint-config-typescript',
+    '@vue/eslint-config-prettier',
+  ],
+  // 小程序全局变量
+  globals: {
+    uni: true,
+    wx: true,
+    WechatMiniprogram: true,
+    getCurrentPages: true,
+    getApp: true,
+    UniApp: true,
+    UniHelper: true,
+    App: true,
+    Page: true,
+    Component: true,
+    AnyObject: true,
+  },
+  parserOptions: {
+    ecmaVersion: 'latest',
+  },
+  rules: {
+    'prettier/prettier': [
+      'warn',
+      {
+        singleQuote: true,
+        semi: false,
+        printWidth: 100,
+        trailingComma: 'all',
+        endOfLine: 'auto',
+      },
+    ],
+    'vue/multi-word-component-names': ['off'],
+    'vue/no-setup-props-destructure': ['off'],
+    'vue/no-deprecated-html-element-is': ['off'],
+    '@typescript-eslint/no-unused-vars': ['off'],
+  },
+}
+```
+
+- 配置 `package.json`
+
+```json
+{
+  "script": {
+    // ... 省略 ...
+    "lint": "eslint . --ext .vue,.js,.ts --fix --ignore-path .gitignore"
+  }
+}
+```
+
+- 运行
+
+```sh
+pnpm lint
+```

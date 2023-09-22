@@ -10,17 +10,17 @@ export const userStore = defineStore(
 
     // 保存用户信息，登录时使用
     const setUserProfile = (val: any) => {
-        userProfile.value = val
+      userProfile.value = val
     }
 
     // 清理用户信息，退出时使用
     const clearUserProfile = () => {
-        userProfile.value = undefined
+      userProfile.value = undefined
     }
 
     // 记得 return
     return {
-        userProfile,
+      userProfile,
       setUserProfile,
       clearUserProfile,
     }
