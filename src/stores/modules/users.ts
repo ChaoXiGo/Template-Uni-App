@@ -29,17 +29,16 @@ export const userStore = defineStore(
   {
     // 网页端配置
     // persist: true,
-
     // 多平台兼容API
-    persist: {
-      storage: {
-        getItem(key) {
-          return uni.getStorageSync(key)
-        },
-        setItem(key, value) {
-          uni.setStorageSync(key, value)
-        },
-      },
-    },
+    // persist: {
+    //   storage: {
+    //     getItem(key) {
+    //       return uni.getStorageSync(key)
+    //     },
+    //     setItem(key, value) {
+    //       uni.setStorageSync(key, value)
+    //     },
+    //   },
+    // },
   },
 )
