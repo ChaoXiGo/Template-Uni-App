@@ -1,30 +1,37 @@
 # Template-Uni-App
-**1`创建以 typescript 开发的工程**
-（如命令行创建失败，请直接访问 gitee 下载模板）
+---
+## 1`创建以 typescript 开发的工程
 npx degit dcloudio/uni-preset-vue#vite-ts "项目名称"
 
-**2`安装依赖**
+## 2`安装依赖
 pnpm i 
+
 设置为国内镜像
+
 pnpm config set registry https://registry.npmmirror.com
 
 <!--  WARN  Issues with peer dependencies found -->
+```
 .
 └─┬ @dcloudio/uni-automator 3.0.0-3081220230817001
   └─┬ @dcloudio/uni-cli-shared 3.0.0-3081220230817001
     └─┬ @vue/server-renderer 3.2.47
       └── ✕ unmet peer vue@3.2.47: found 3.3.4
-      下载vue@3.2.47解决
+```
+根据提示下载vue@3.2.47解决
+
 pnpm install vue@3.2.47
 
-**3`编译测试一下**
+## 3`编译测试一下
 pnpm dev:mp-weixin
 
-**4`插件安装!**[Alt text](image.png)
+## 4`插件安装
 Unihelper的使用和新建分页和查看文档
+## ![Alt text](image.png)
 
-**5`安装类型声明插件 微信小程序和uni-app**
+## 5`安装类型声明插件 微信小程序和uni-app
 pnpm i -D @types/wechat-miniprogram @uni-helper/uni-app-types
+```
 配置tsconfig.json 
     {
          "types": [
@@ -41,12 +48,15 @@ pnpm i -D @types/wechat-miniprogram @uni-helper/uni-app-types
             "slot"
         ]
     },
-**设置搜索文件关联**
-将manifest.json和pages.json以键值对的方式配置  manifest.json | jsonc 允许注释
+```
+### 设置搜索文件关联
+将manifest.json和pages.json以键值对的方式配置
 
-**6`安装uni-ui 组件库**
+  {manifest.json : jsonc} 允许注释
+
+## 6`安装uni-ui 组件库
 pnpm i @dcloudio/uni-ui
-
+```
 // pages.json
 {
   // 组件自动导入
@@ -61,9 +71,11 @@ pnpm i @dcloudio/uni-ui
     // …省略
   ]
 }
+```
 
-**7`安装类型声明文件**
+## 7`安装类型声明文件
 pnpm i -D @uni-helper/uni-ui-types
+```
 配置类型声明文件
 {
   "compilerOptions": {
@@ -80,30 +92,32 @@ pnpm i -D @uni-helper/uni-ui-types
     "nativeTags": ["block", "component", "template", "slot"]
   }
 }
+```
+## 8`持久化存储插件pinia
 
-**8`持久化存储插件pinia**
-pnpm install pinia
+pnpm install pinia <br>
 pnpm i pinia-plugin-persistedstate
 
-## 1:创建 pinia 实例
-src\stores\index.ts
-// 
+### 1:创建 pinia 实例
+文件路径: src\stores\index.ts<br>
+// 创建pinia<br>
 const pinia = createPinia()
 
-// 使用持久化存储插件
+// 使用持久化存储插件<br>
 pinia.use(persist)
 
-// 默认导出，给 main.ts 使用
+// 默认导出，给 main.ts 使用<br>
 export default pinia
 
-// 模块统一导出
+// 模块统一导出<br>
 export * from './modules/member'
 
-## 2:app使用
-src\main.ts
+### 2:app使用
+文件路径: src\main.ts<br>
 app.use(pinia)
-## 3: 定义 Store
-src\stores\modules\users.ts
+### 3: 定义 Store
+文件路径:  src\stores\modules\users.ts<br>
+```
 export const userStore = defineStore(
   'users',
   () => {
@@ -145,3 +159,4 @@ export const userStore = defineStore(
     },
   },
 )
+```
